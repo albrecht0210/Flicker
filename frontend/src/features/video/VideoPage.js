@@ -3,6 +3,7 @@ import VideoOptions from "./VideoOptions";
 import { useState } from "react";
 import VideoDisplay from "./Video";
 import RatePanel from "./RatePanel";
+import RateDialog from "./RateDialog";
 
 function VideoPage() {
     const [option, setOption] = useState(1);
@@ -13,17 +14,13 @@ function VideoPage() {
         setPitchSelected(pitch);
         setOpenRate(true);
     }
-
-    const handleOpenRate = () => {
-        setOpenRate(true);
-    }
     
     const handleCloseRate = () => {
         setOpenRate(false);
     }
 
     const handleOptionChange = (event, newValue) => {
-        setValue(newValue);
+        setOption(newValue);
     }
     return (
         <Box>

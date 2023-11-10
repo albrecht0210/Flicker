@@ -1,4 +1,6 @@
 import { Button, CircularProgress, Paper, Stack, Typography } from "@mui/material";
+import { useGetPresentorsQuery } from "../api/apiSlice";
+import { useMemo } from "react";
 
 let PresentorCard = ({ presentor, onClick }) => {
     return (
@@ -17,9 +19,7 @@ function RatePanel(props) {
     const {
         data: presentors = [],
         isLoading,
-        isFetching,
         isSuccess,
-        isError,
         error,
     } = useGetPresentorsQuery(localStorage.get("meeting"))
     

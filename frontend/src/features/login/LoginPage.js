@@ -1,6 +1,7 @@
 import { Box } from "@mui/material";
 import LoginCard from "./LoginCard";
 import { useState } from "react";
+import LoginMessage from "./LoginMessage";
 
 function LoginPage() {
     const [open, setOpen] = useState(false);
@@ -25,10 +26,10 @@ function LoginPage() {
                 height: "calc(100vh * .80)"
             }}
         >
-            <LoginCard 
+            <LoginCard
                 handleError={setError}
             />
-            <LoginMessage 
+            <LoginMessage
                 open={open}
                 handleClose={handleClose}
                 meesage={message}

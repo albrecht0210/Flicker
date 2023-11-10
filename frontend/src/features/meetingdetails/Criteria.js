@@ -1,5 +1,7 @@
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, Typography } from "@mui/material";
 import { useGetCriteriasQuery } from "../api/apiSlice";
+import { useMemo } from 'react';
 
 let CriteriaData = ({ criteria }) => {
     return (
@@ -22,9 +24,7 @@ function Criteria() {
     const {
         data: criterias = [],
         isLoading,
-        isFetching,
         isSuccess,
-        isError,
         error,
     } = useGetCriteriasQuery(localStorage.get("meeting"))
 
@@ -40,7 +40,7 @@ function Criteria() {
         content = <CircularProgress />
     } else if (isSuccess) {
         const renderedCriterias = fetchedCriterias.map((criteria) => (
-            <CriteriaData key={meeting.id} criteria={criteria} />
+            <CriteriaData key={criteria.id} criteria={criteria} />
         ));
 
         content = renderedCriterias;

@@ -23,7 +23,7 @@ function Navbar(props) {
     );
 }
 
-TopNav.defaultProps = {
+Navbar.defaultProps = {
     drawerWidth: 240,
 };
 

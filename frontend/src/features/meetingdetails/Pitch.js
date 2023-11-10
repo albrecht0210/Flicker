@@ -1,5 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary, Box, CircularProgress, Typography } from "@mui/material";
 import { useGetPresentorsQuery } from "../api/apiSlice";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useMemo } from "react";
 
 let PitchData = ({ presentor }) => {
     return (
@@ -22,9 +24,7 @@ function Pitch() {
     const {
         data: presentors = [],
         isLoading,
-        isFetching,
         isSuccess,
-        isError,
         error,
     } = useGetPresentorsQuery(localStorage.get("meeting"))
 

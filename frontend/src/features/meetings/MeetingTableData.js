@@ -26,7 +26,6 @@ function MeetingTableData() {
     const {
         data: meetings = [],
         isLoading,
-        isFetching,
         isSuccess,
         isError,
         error,
