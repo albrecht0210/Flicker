@@ -8,7 +8,7 @@ function NoAuth() {
             <img 
                 src="/sample/wildcat.png" 
                 alt="WildcatLogo" 
-                style={{ width: "8rem" }}
+                style={{ width: "5rem" }}
                 onClick={() => navigate("/")}
             />
         </>

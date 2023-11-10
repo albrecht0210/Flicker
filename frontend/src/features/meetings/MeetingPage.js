@@ -2,6 +2,8 @@ import { Box } from "@mui/material";
 import { useState } from "react"
 import TabContainer from "../../components/tabs/TabContainer";
 import TabPanel from "../../components/tabs/TabPanel";
+import MeetingSearchInput from "./MeetingSearchInput";
+import MeetingTable from "./MeetingTable";
 
 function MeetingPage() {
     const tabChoices = [

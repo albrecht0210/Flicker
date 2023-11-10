@@ -3,6 +3,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 // import MeetingDetailsPage from "./features/meetingdetails/MeetingDetailsPage";
 // import VideoPage from "./features/video/VideoPage";
 import NotAuthenticatedLayout from "./layouts/NotAuthenticatedLayout";
+import LoginPage from "./features/login/LoginPage";
+import MeetingPage from "./features/meetings/MeetingPage";
+import MeetingDetailsPage from "./features/meetingdetails/MeetingDetailsPage";
+import VideoPage from "./features/video/VideoPage";
 
 function UrlPaths() {
 
@@ -11,10 +15,10 @@ function UrlPaths() {
     //         path: "/",
     //         element: <AuthenticatedLayout />,
     //         children: [
-    //             {
-    //                 path: "",
-    //                 element: <DashboardPage />
-    //             },
+    //             // {
+    //             //     path: "",
+    //             //     element: <DashboardPage />
+    //             // },
     //             {
     //                 path: "meetings",
     //                 element: "",//layout,

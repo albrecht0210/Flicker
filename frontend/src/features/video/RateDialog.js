@@ -1,7 +1,9 @@
-import { Dialog, DialogContent, Typography } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Typography } from "@mui/material";
 import TabContainer from "../../components/tabs/TabContainer";
 import Rate from "./Rate";
 import Feedback from "./Feedback";
+import { useState } from "react";
+import TabPanel from "../../components/tabs/TabPanel";
 
 function RateDialog(props) {
     const { pitch, open, handleClose } = props;
@@ -19,7 +21,7 @@ function RateDialog(props) {
             <DialogContent>
                 <TabContainer
                     tabs={tabChoices}
-                    handleTabChange={handleTabChange}
+                    handleTabChange={handleClose}
                     selectedTab={tabValue}
                 />
                 <TabPanel selectedTab={tabValue} name="Rating" value={0}>

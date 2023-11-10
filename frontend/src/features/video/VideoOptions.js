@@ -1,4 +1,4 @@
-import { BottomNavigationAction, Paper } from "@mui/material";
+import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import ChatIcon from '@mui/icons-material/Chat';
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
 

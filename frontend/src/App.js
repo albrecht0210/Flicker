@@ -1,6 +1,6 @@
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import darkTheme from "./theme/darkTheme";
-import UrlPaths from "./routes";
+import UrlPaths from "./router";
 
 function App() {
   return (

@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // devvariable
-meetingStatus = ["pending", "in_progress", "completed"];
-
+const meetingStatus = ["pending", "in_progress", "completed"];
 
 export const apiSlice = createApi({
     reducerPath: 'api',
@@ -14,7 +13,7 @@ export const apiSlice = createApi({
         // Wildcat Server
         authenticate: builder.mutation({
             query: (credentials) => ({
-                url: `${process.env.REACT_APP_WILDCAT_SERVER_HOST}token/`,
+                url: `http://localhost:8000/api/token/`,
                 method: 'POST',
                 body: credentials
             }),
@@ -100,3 +99,5 @@ export const {
     useGetCriteriasQuery,
     useGetPresentorsQuery,
 } = apiSlice;
+
+export const selectApi = (state) => state.api;
