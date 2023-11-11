@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Innovation",
+        "description": "The uniqueness and originality of the startup's idea or product."
+    },
+    {
+        "name": "Market Potential",
+        "description": "The size and growth potential of the target market."
+    },
+    {
+        "name": "Team Expertise",
+        "description": "The skills and experience of the founding team."
+    },
+    {
+        "name": "Execution Plan",
+        "description": "The well-defined strategy and plan for bringing the idea to market."
+    },
+    {
+        "name": "Financial Viability",
+        "description": "The ability of the startup to generate revenue and achieve profitability."
+    }
+]

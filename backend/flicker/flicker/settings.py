@@ -144,7 +144,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 SSO_JWT_PUBLIC_KEY_PATH = os.path.join(Path(BASE_DIR).parent, 'config', 'jwt_key.pub')
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'ROTATE_REFRESH_TOKENS': False,
 

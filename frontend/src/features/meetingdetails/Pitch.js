@@ -26,9 +26,9 @@ function Pitch() {
         isLoading,
         isSuccess,
         error,
-    } = useGetPresentorsQuery(localStorage.get("meeting"))
+    } = useGetPresentorsQuery(Number(localStorage.getItem("selectedMeeting")))
 
-    
+    console.log(presentors)
     const fetchedPresentors = useMemo(() => {
         const fetchedPresentors = presentors.slice();
         return fetchedPresentors;
@@ -45,7 +45,7 @@ function Pitch() {
 
         content = renderedPresentors;
     } else {
-        content = <Typography>{error.toSting()}</Typography>
+        content = <Typography>{error.toString()}</Typography>
     }
 
     return (

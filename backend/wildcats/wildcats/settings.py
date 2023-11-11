@@ -183,7 +183,7 @@ if (not os.path.exists(JWT_PRIVATE_KEY_PATH)) or (not os.path.exists(JWT_PUBLIC_
     print('PUBLIC/PRIVATE keys Generated!')
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),  # "exp" (Expiration Time) Claim
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # "exp" (Expiration Time) Claim
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),  # "exp" (Expiration Time) Claim
 
     'ALGORITHM': 'RS256',  # 'alg' (Algorithm Used) specified in header

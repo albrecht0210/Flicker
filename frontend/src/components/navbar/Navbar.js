@@ -1,10 +1,12 @@
 import { AppBar, Toolbar } from "@mui/material";
 import NoAuth from "./NoAuth";
+import { useSelector } from "react-redux";
+import Auth from "./Auth";
 // import Auth from "./TopNav/Auth";
 // import { useSelector } from "react-redux";
 
 function Navbar(props) {
-    // const { token } = useSelector((state) => state.auth)
+    const { accessToken } = useSelector((state) => state.auth);
     const { drawerWidth } = props;
 
     return (
@@ -16,8 +18,7 @@ function Navbar(props) {
             }}
         >
             <Toolbar>
-                {/* { !token ? <NoAuth /> : <Auth /> } */}
-                <NoAuth />
+                { !accessToken ? <NoAuth /> : <Auth /> }
             </Toolbar>
         </AppBar>
     );

@@ -1,18 +1,14 @@
-import { useEffect } from "react";
-import { selectApi } from "../features/api/apiSlice";
-import { Outlet, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
 import Navbar from "../components/navbar/Navbar";
 import { Box, Toolbar } from "@mui/material";
+import SideNav from "../components/sidenav/SideNav";
 
 
 function AuthenticatedLayout() {
-    const apiState = useSelector(selectApi);
-    console.log(apiState)
-    const location = useLocation();
+    // const location = useLocation();
     // const dispatch = useDispatch();
     // const navigate = useNavigate();
-    const currentURL = location.pathname;
+    // const currentURL = location.pathname;
 
     // useEffect(() => { // check if token is available
     //     if (!token) {
@@ -47,6 +43,7 @@ function AuthenticatedLayout() {
     return (
         <>
             <Navbar />
+            <SideNav />
             <Box pl="280px" pr="40px">
                 <Toolbar sx={{ mb: '25px' }} />
                 <Outlet />

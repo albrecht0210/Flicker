@@ -8,5 +8,10 @@
         "name": "Activity Management Application",
         "identifier": "Activity Management",
         "callback_url": "http://localhost:8001/api/account/create/"
+    },
+    {
+        "name": "Teknoplat Application",
+        "identifier": "Teknoplat",
+        "callback_url": "http://localhost:8008/api/account/create/"
     }
 ]

@@ -19,7 +19,7 @@ function Participants() {
         isLoading,
         isSuccess,
         error,
-    } = useGetParticpantsQuery(localStorage.getItem("course"));
+    } = useGetParticpantsQuery(localStorage.getItem("selectedCourse"));
     
     const fetchedParticipants = useMemo(() => {
         const fetchedParticipants = participants.slice();
@@ -37,7 +37,7 @@ function Participants() {
 
         content = renderedParticipants;
     } else {
-        content = <Typography>{error.toSting()}</Typography>
+        content = <Typography>{error.toString()}</Typography>
     }
 
     return (

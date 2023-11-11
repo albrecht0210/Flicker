@@ -7,7 +7,7 @@ let PresentorCard = ({ presentor, onClick }) => {
         <Paper>
             <Stack direction="row" spacing={2}>
                 <Typography variant="h6">{presentor.name}</Typography>
-                <Button onClick={() => onClick(presentor)}>Rate</Button>
+                <Button onClick={() => onClick(presentor, presentor.name)}>Rate</Button>
             </Stack>
         </Paper>
     )
@@ -21,7 +21,7 @@ function RatePanel(props) {
         isLoading,
         isSuccess,
         error,
-    } = useGetPresentorsQuery(localStorage.get("meeting"))
+    } = useGetPresentorsQuery(localStorage.getItem("selectedMeeting"))
     
     const fetchedPresentors = useMemo(() => {
         const fetchedPresentors = presentors.slice();
@@ -39,7 +39,7 @@ function RatePanel(props) {
 
         content = renderedPresentors;
     } else {
-        content = <Typography>{error.toSting()}</Typography>
+        content = <Typography>{error.toString()}</Typography>
     }
 
     return (

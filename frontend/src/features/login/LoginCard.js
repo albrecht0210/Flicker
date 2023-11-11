@@ -1,15 +1,17 @@
 import { Card, CardContent, Stack, Typography } from "@mui/material";
 import LoginInput from "./LoginInput";
 import LoginButton from "./LoginButton";
-import { selectApi, useAuthenticateMutation } from "../api/apiSlice";
+import { useAuthenticateMutation } from "../api/apiSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { storeAuth } from "./authSlice";
+import Cookies from "js-cookie";
 
 function LoginCard(props) {
-    const { access } = useSelector((state) => state.api);
-    const api = useSelector(selectApi);
+    const stateAuth = useSelector((state) => state.auth);
     const { handleError } = props;
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [authenticate, { isLoading }] = useAuthenticateMutation();
 
@@ -37,12 +39,10 @@ function LoginCard(props) {
                     ...previousFormData,
                     [formData.password]: ""
                 }));
-                localStorage.setItem("accessToken", response.access)
-                localStorage.setItem("refreshToken", response.refresh)
+                Cookies.set("accessToken", response.access);
+                Cookies.set("refreshToken", response.refresh);
+                dispatch(storeAuth({ accessToken: response.access, refreshToken: response.refresh }));
                 navigate('/');
-                console.log(response);
-                console.log(access);
-                console.log(api);
             } catch (err) {
                 console.error("Failed to login: ", err);
                 handleError(err);

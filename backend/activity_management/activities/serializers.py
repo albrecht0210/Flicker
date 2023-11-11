@@ -5,15 +5,15 @@ from django.urls import reverse
 from .models import Activity
 
 class ActivitySerializer(serializers.ModelSerializer):
-    url = serializers.SerializerMethodField(read_only=True)
+    # url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Activity
-        fields = ('url', 'title', 'description', 'submission_status', 'due_date', 'course', 'service')
+        fields = ('id', 'title', 'description', 'submission_status', 'due_date', 'course', 'service')
 
-    def get_url(self, obj):
-        request = self.context.get('request')
-        base_url = request.build_absolute_uri(reverse('activity-detail', kwargs={'pk': obj.id}))
+    # def get_url(self, obj):
+    #     request = self.context.get('request')
+    #     base_url = request.build_absolute_uri(reverse('activity-detail', kwargs={'pk': obj.id}))
         
-        return base_url
+    #     return base_url
     

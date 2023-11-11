@@ -9,6 +9,8 @@ function MeetingTable() {
                     <TableRow>
                         <TableCell width={100}></TableCell>
                         <TableCell>Title</TableCell>
+                        <TableCell>Teacher Score Weight</TableCell>
+                        <TableCell>Student Score Weight</TableCell>
                     </TableRow>
                 </TableHead>
                 <MeetingTableData />

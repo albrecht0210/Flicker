@@ -62,6 +62,7 @@ class MeetingViewSet(viewsets.ModelViewSet):
     def add_criteria(self, request, pk=None):
         meeting = self.get_object()  # Get the Meeting instance
         criteria_id = request.data.get('criteria')
+        weight = request.data.get('weight')
 
         try:
             criteria = Criteria.objects.get(id=criteria_id)  # Assuming you have a Criteria model
@@ -70,10 +71,19 @@ class MeetingViewSet(viewsets.ModelViewSet):
 
         if criteria in meeting.criterias.all():
             return Response({'error': 'Criteria is already added to the meeting'}, status=status.HTTP_400_BAD_REQUEST)
-
-        meeting.criterias.add(criteria)  # Add the criteria to the criterias ManyToMany field
-        meeting.save()
-
+        meeting_criterias = {
+            "criteria": criteria_id,
+            "meeting": meeting.id,
+            "weight": weight
+        }
+        
+        print(meeting_criterias)
+        
+        serializer = MeetingCriteriaSerializer(data=meeting_criterias)  # Assuming you have a CriteriaSerializer
+        print(serializer.is_valid())
+        if serializer.is_valid():
+            print("sulod ka meeting?")
+            serializer.save()
         return Response({'success': 'Criteria added successfully'}, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['get'])

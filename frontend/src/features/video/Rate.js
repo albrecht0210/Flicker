@@ -1,22 +1,22 @@
-import { FormControl, InputLabel, MenuItem, Paper, Select, Typography } from "@mui/material";
-import { useState } from "react";
+import { Box, CircularProgress, FormControl, InputLabel, MenuItem, Paper, Select, Stack, Typography } from "@mui/material";
+import { useMemo, useState } from "react";
+import { useGetCriteriasQuery } from "../api/apiSlice";
 
-function Rate(props) {
-    const { criteria } = props;
+let CriteriaRate = ({ criteria }) => {
     const [rate, setRate] = useState('');
-
+    
     const handleChange = (event) => {
         setRate(event.target.value);
     };
-
+    
     return (
-        <Paper>
+        <Box key={criteria.id} >
             <Typography>{criteria.name}</Typography>
             <FormControl fullWidth>
-                <InputLabel id={`${criteria.name}-label`}>Rate Value</InputLabel>
+                <InputLabel id={`${criteria.display_criteria.name}-label`}>{criteria.display_criteria.name}</InputLabel>
                 <Select
-                    labelId={`${criteria.name}-label`}
-                    id={`${criteria.name}-select`}
+                    labelId={`${criteria.display_criteria.name}-label`}
+                    id={`${criteria.display_criteria.name}-select`}
                     value={rate}
                     label="Rate"
                     onChange={handleChange}
@@ -26,6 +26,42 @@ function Rate(props) {
                     ))}
                 </Select>
             </FormControl>
+        </Box>
+    )
+}
+
+function Rate(props) {
+    const {
+        data: criterias = [],
+        isLoading,
+        isSuccess,
+        error,
+    } = useGetCriteriasQuery(localStorage.getItem("selectedMeeting"))
+    
+    const fetchedCriterias = useMemo(() => {
+        const fetchedCriterias = criterias.slice();
+        return fetchedCriterias;
+    }, [criterias]);
+
+    let content;
+
+    if (isLoading) {
+        content = <CircularProgress />
+    } else if (isSuccess) {
+        const renderedCriterias = fetchedCriterias.map((criteria, index) => (
+            <CriteriaRate key={index} criteria={criteria} />
+        ));
+
+        content = renderedCriterias;
+    } else {
+        content = <Typography>{error.toString()}</Typography>
+    }
+
+    return (
+        <Paper>
+            <Stack spacing={3}>
+                { content }
+            </Stack>
         </Paper>
     )
 }

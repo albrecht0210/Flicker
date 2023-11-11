@@ -4,17 +4,19 @@ import { useGetCriteriasQuery } from "../api/apiSlice";
 import { useMemo } from 'react';
 
 let CriteriaData = ({ criteria }) => {
+    console.log(criteria)
     return (
         <Accordion key={criteria.id}>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}
-                aria-controls={`${criteria.name}-content`}
-                id={`${criteria.name}-header`}
+                aria-controls={`${criteria.display_criteria.name}-content`}
+                id={`${criteria.display_criteria.name}-header`}
             >
-                <Typography>{criteria.name}</Typography>
+                <Typography>{criteria.display_criteria.name}</Typography>
             </AccordionSummary>
             <AccordionDetails>
-                <Typography>{criteria.description}</Typography>
+                <Typography>{criteria.display_criteria.description}</Typography>
+                <Typography>{criteria.weight}</Typography>
             </AccordionDetails>
         </Accordion>
     )
@@ -26,9 +28,9 @@ function Criteria() {
         isLoading,
         isSuccess,
         error,
-    } = useGetCriteriasQuery(localStorage.get("meeting"))
+    } = useGetCriteriasQuery(localStorage.getItem("selectedMeeting"))
 
-    
+    console.log(criterias)
     const fetchedCriterias = useMemo(() => {
         const fetchedCriterias = criterias.slice();
         return fetchedCriterias;
@@ -39,13 +41,13 @@ function Criteria() {
     if (isLoading) {
         content = <CircularProgress />
     } else if (isSuccess) {
-        const renderedCriterias = fetchedCriterias.map((criteria) => (
-            <CriteriaData key={criteria.id} criteria={criteria} />
+        const renderedCriterias = fetchedCriterias.map((criteria, index) => (
+            <CriteriaData key={index} criteria={criteria} />
         ));
 
         content = renderedCriterias;
     } else {
-        content = <Typography>{error.toSting()}</Typography>
+        content = <Typography>{error.toString()}</Typography>
     }
 
     return (

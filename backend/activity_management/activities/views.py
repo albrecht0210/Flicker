@@ -25,7 +25,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
         _, token = authorization_header.split()
 
         headers = {'Authorization': f"Bearer {token}"}
-        response = requests.get(f'http://localhost:8080/api/services/{service_id}/', headers=headers)
+        response = requests.get(f'http://localhost:8000/api/services/{service_id}/', headers=headers)
 
         return response
     
@@ -38,9 +38,12 @@ class ActivityViewSet(viewsets.ModelViewSet):
 
         return response
     
-    def perform_create(self, serializer):
-        course_id = serializer.validated_data.get('course')
-        service_id = serializer.validated_data.get('service')
+    def create(self, request, *args, **kwargs):
+        # Extract data from the request
+        course_id = request.data.get('course')
+        service_id = request.data.get('service')
+
+        # Validate course and service
         response_course = self.validate_course(course_id)
         response_service = self.validate_service(service_id)
 
@@ -63,30 +66,36 @@ class ActivityViewSet(viewsets.ModelViewSet):
         if response_course.status_code in response_course_mappings:
             status_code, error_message = response_course_mappings[response_course.status_code]
             return Response({'error': error_message}, status=status_code)
-        
+
         if response_service.status_code in response_service_mappings:
             status_code, error_message = response_service_mappings[response_service.status_code]
             return Response({'error': error_message}, status=status_code)
-        
+
         meeting_data = {
-            'name': serializer.validated_data.get('name'),
-            'description': serializer.validated_data.get('description'),
-            'course': serializer.validated_data.get('course')
+            'name': request.data.get('title'),
+            'description': request.data.get('description'),
+            'course': request.data.get('course'),
+            'status':  request.data.get('status')
         }
 
-        response_meeting_create = self.push_activity_to_flicker(meeting_data)
+        if service_id == 3:
+            response_meeting_create = self.push_activity_to_flicker(meeting_data)
 
-        response_meeting_create_mappings = {
-            500: (status.HTTP_503_SERVICE_UNAVAILABLE, 'Create meeting request failed'),
-            401: (status.HTTP_401_UNAUTHORIZED, 'Not authorized'),
-            400: (status.HTTP_400_BAD_REQUEST, 'Data error'),
-            403: (status.HTTP_403_FORBIDDEN, 'Forbidden path'),
-        }
+            response_meeting_create_mappings = {
+                500: (status.HTTP_503_SERVICE_UNAVAILABLE, 'Create meeting request failed'),
+                401: (status.HTTP_401_UNAUTHORIZED, 'Not authorized'),
+                400: (status.HTTP_400_BAD_REQUEST, 'Data error'),
+                403: (status.HTTP_403_FORBIDDEN, 'Forbidden path'),
+            }
 
-        if response_meeting_create.status_code in response_meeting_create_mappings:
-            status_code, error_message = response_meeting_create_mappings[response_meeting_create.status_code]
-            return Response({'error': error_message}, status=status_code)
+            if response_meeting_create.status_code in response_meeting_create_mappings:
+                status_code, error_message = response_meeting_create_mappings[response_meeting_create.status_code]
+                return Response({'error': error_message}, status=status_code)
 
-        if response_course.status_code == 200 and response_service.status_code == 200 and response_meeting_create.status_code == 200:
+        # If all checks pass, proceed with the standard creation
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        
+        if response_course.status_code == 200 and response_service.status_code == 200 and serializer.is_valid():
             serializer.save()
-            
+                    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

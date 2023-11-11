@@ -12,5 +12,5 @@ urlpatterns = [
 
     path('courses/<int:pk>/add_member/', CourseViewSet.as_view({'post': 'add_member'}), name='add-member'),
     path('courses/<int:pk>/get_members/', CourseViewSet.as_view({'get': 'get_members'}), name='get-members'),
-    path('courses/account/', CourseByAccountAPIView.as_view(), name='courses-by-account'),
+    path('course/account/', CourseByAccountAPIView.as_view(), name='courses-by-account'),
 ]

@@ -6,7 +6,7 @@ function Feedback() {
             id="feedbackInput"
             label="Feedback"
             multiline
-            rows={4}
+            rows={13}
         />
     );
 }

@@ -2,7 +2,7 @@ import { Paper } from "@mui/material";
 
 function VideoDisplay() {
     return (
-        <Paper></Paper>
+        <Paper elevation={5} sx={{ backgroundColor: "grey", height: "100%" }}></Paper>
     );
 }
 

@@ -19,12 +19,12 @@ class PitchViewSet(viewsets.ModelViewSet):
         
         return response
     
-    def perform_create(self, serializer):
-        team_id = serializer.validated_data.get('team')
+    def create(self, request, *args, **kwargs):
+        team_id = request.data.get('team')
 
         response = self.validate_team(team_id)
 
-        response = {
+        response_mappings = {
             500: (status.HTTP_503_SERVICE_UNAVAILABLE, 'Team request failed'),
             401: (status.HTTP_401_UNAUTHORIZED, 'Not authorized'),
             400: (status.HTTP_400_BAD_REQUEST, 'Data error'),
@@ -32,10 +32,14 @@ class PitchViewSet(viewsets.ModelViewSet):
             404: (status.HTTP_404_NOT_FOUND, 'Team not found'),
         }
 
-        if response.status_code in response:
-            status_code, error_message = response[response.status_code]
+        if response.status_code in response_mappings:
+            status_code, error_message = response_mappings[response.status_code]
             return Response({'error': error_message}, status=status_code)
         
-        if response.status_code == 200:
+        serializer = self.get_serializer(data=request.data, context={'request': request})
+        print(serializer.is_valid())
+        if response.status_code == 200 and serializer.is_valid():
+            print("SUlod ka?")
             serializer.save()
-            
+                    
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

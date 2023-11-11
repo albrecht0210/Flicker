@@ -7,6 +7,7 @@ from .models import Course
 from .serializers import CourseSerializer
 from accounts.serializers import AccountSerializer
 from team_management.permissions import IsWildcatAdminOrReadOnly
+from .permissions import IsTestUser
 
 Account = get_user_model()
 
@@ -28,7 +29,7 @@ class CourseViewSet(viewsets.ModelViewSet):
                 if account.is_staff and members.filter(is_staff=True).exists():
                     return Response({'error': 'A staff member is already a member of the course.'}, status=status.HTTP_400_BAD_REQUEST)
                 
-                existing_course = Course.objects.filter(name=course.name, members__in=account).exclude(pk=course.pk)
+                existing_course = Course.objects.filter(name=course.name, members__in=[account]).exclude(pk=course.pk)
                 if existing_course.exists():
                     return Response({'error': 'Account has already enrolled in a course with the same name.'}, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,12 +54,12 @@ class CourseViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
     
 class CourseByAccountAPIView(generics.ListAPIView):
-    queryset = Course.objects.all()
     serializer_class = CourseSerializer
     permission_classes = (permissions.IsAuthenticated, )
 
     def get_queryset(self):
         try:
+            print(self.request.user)
             queryset = Course.objects.filter(members__in=[self.request.user])
             if not queryset.exists():
                 raise Course.DoesNotExist

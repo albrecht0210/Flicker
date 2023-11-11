@@ -3,14 +3,15 @@ from rest_framework import serializers
 from .models import Pitch
 
 class PitchSerializer(serializers.ModelSerializer):
-    url = serializers.SerializerMethodField(read_only=True)
+    # url = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Pitch
-        fields = ('url', 'id', 'name', 'description', 'team')
-
-    def get_url(self, obj):
-        request = self.context.get('request')
-        base_url = request.build_absolute_uri(reverse('pitch-detail', kwargs={'pk': obj.id}))
+        fields = ('id', 'name', 'description', 'team')
         
-        return base_url
+
+    # def get_url(self, obj):
+    #     request = self.context.get('request')
+    #     base_url = request.build_absolute_uri(reverse('pitch-detail', kwargs={'pk': obj.id}))
+        
+    #     return base_url

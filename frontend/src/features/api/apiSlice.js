@@ -1,13 +1,16 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import Cookies from 'js-cookie';
 
 // devvariable
-const meetingStatus = ["pending", "in_progress", "completed"];
 
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: process.env.REACT_APP_WILDCAT_SERVER_HOST,
-        
+        prepareHeaders: (headers, { getState }) => {
+            const token = Cookies.get('accessToken')
+            console.log(token);
+            headers.set('Authorization', `Bearer ${token}`)
+        }
     }),
     endpoints: (builder) => ({
         // Wildcat Server
@@ -18,74 +21,32 @@ export const apiSlice = createApi({
                 body: credentials
             }),
         }),
-        // deauthenticate: builder.mutation({
-        //     query: () => ({
-        //         url: 'users/logout/',
-        //         method: 'POST'
-        //     }),
-        // }),
-        // Flicker Server
-        getMeetings: builder.query({
-            query: (courseId) => `${process.env.REACT_APP_FLICKER_HOST}meetings/?course=${courseId}&status=${localStorage.getItem('meetingStatus') ? meetingStatus[localStorage.getItem('meetingStatus')] : meetingStatus[0]}`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+        getAccount: builder.query({
+            query: () => `http://localhost:8000/api/account/profile/`
         }),
-        getMeeting: builder.query({
-            query: (meetingId) => `${process.env.REACT_APP_FLICKER_HOST}meetings/${meetingId}`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+        // Team Management Server
+        getCourses: builder.query({
+            query: () => `http://localhost:8080/api/course/account/`,
         }),
         getParticpants: builder.query({
-            query: (courseId) => `${process.env.REACT_APP_TEAM_MANAGEMENT_HOST}courses/${courseId}/get_members/`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+            query: (courseId) => `http://localhost:8080/api/courses/${courseId}/get_members/`,
         }),
-        getCourses: builder.query({
-            query: () => `${process.env.REACT_APP_TEAM_MANAGEMENT_HOST}courses/account/`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+        // Flicker Server
+        getMeetings: builder.query({
+            query: (params) => `http://localhost:8008/api/meetings/?course=${params.courseId}&status=${params.status}`,
+        }),
+        getMeeting: builder.query({
+            query: (meetingId) => `http://localhost:8008/api/meetings/${meetingId}/`,
         }),
         getCriterias: builder.query({
-            query: (meetingId) => `${process.env.REACT_APP_FLICKER_HOST}meetings/${meetingId}/get_criterias/`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+            query: (meetingId) => `http://localhost:8008/api/meetings/${meetingId}/get_criterias/`,
         }),
         getPresentors: builder.query({
-            query: (meetingId) => `${process.env.REACT_APP_FLICKER_HOST}meetings/${meetingId}/get_presentors/`,
-            headers: (headers) => {
-                const token = localStorage.getItem('accessToken')
-                if (token) {
-                    headers.append('Authorization', `Bearer ${token}`);
-                }
-                return headers;
-            }
+            query: (meetingId) => `http://localhost:8008/api/meetings/${meetingId}/get_presentors/`,
         }),
-        
+        getPitch: builder.query({
+            query: (pitchId) => `http://localhost:8008/api/pitches/${pitchId}/`,
+        }),
     }),
 });
 
@@ -98,6 +59,8 @@ export const {
     useGetCoursesQuery,
     useGetCriteriasQuery,
     useGetPresentorsQuery,
+    useGetAccountQuery,
+    useGetPitchQuery
 } = apiSlice;
 
 export const selectApi = (state) => state.api;

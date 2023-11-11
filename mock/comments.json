@@ -1,0 +1,38 @@
+[
+  {
+    "account": 2,
+    "meeting": 5,
+    "comment": "Team 2 delivered an outstanding pitch on HealthTech Analytics. Their insights into advanced analytics tools for healthcare professionals were impressive. With a solid team of 4, they seem well-prepared to make a significant impact in the healthcare industry.",
+    "team": 1
+  },
+  {
+    "account": 4,
+    "meeting": 2,
+    "comment": "Kudos to Team 4 for their innovative EcoTech Harvest pitch! Their commitment to sustainable agriculture using IoT and precision farming is noteworthy. With a team of 5, they appear ready to tackle the challenges and lead positive change in the agricultural sector.",
+    "team": 2
+  },
+  {
+    "account": 6,
+    "meeting": 6,
+    "comment": "Team 6 showcased an exciting vision with FutureEd Tech. Their focus on transforming education through technology is inspiring. With a compact team of 3, they demonstrate efficiency in their approach. Looking forward to seeing their ideas evolve.",
+    "team": 3
+  },
+  {
+    "account": 9,
+    "meeting": 1,
+    "comment": "Impressive pitch from Team 9 in Fintech Frontier! Their plans to disrupt the financial industry with blockchain-based solutions are intriguing. With a team of 4, they seem well-positioned to navigate the complexities of the fintech landscape.",
+    "team": 4
+  },
+  {
+    "account": 11,
+    "meeting": 4,
+    "comment": "Virtual Reality Wellness presented by Team 11 is a fascinating concept. Their use of VR technology for mental health is forward-thinking. Despite a smaller team of 2, their passion and expertise shine through. Excited to see how they develop this innovative idea.",
+    "team": 5
+  },
+  {
+    "account": 5,
+    "meeting": 3,
+    "comment": "Team 5's CyberGuard Solutions pitch was impressive! Their commitment to developing next-gen cybersecurity tools is crucial in today's digital landscape. With a team of 5, they have the diversity and expertise needed to address evolving cyber threats.",
+    "team": 3
+  }
+]
