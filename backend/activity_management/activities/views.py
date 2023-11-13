@@ -1,4 +1,5 @@
 import requests
+import json
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from .models import Activity
@@ -29,7 +30,7 @@ class ActivityViewSet(viewsets.ModelViewSet):
 
         return response
     
-    def push_activity_to_flicker(self, request_data):
+    def push_activity_to_teknoplat(self, request_data):
         authorization_header = self.request.META.get('HTTP_AUTHORIZATION', None)
         _, token = authorization_header.split()
 
@@ -78,8 +79,10 @@ class ActivityViewSet(viewsets.ModelViewSet):
             'status':  request.data.get('status')
         }
 
-        if service_id == 3:
-            response_meeting_create = self.push_activity_to_flicker(meeting_data)
+        res_data = json.loads(response_service.content.decode('utf-8'))
+        
+        if "teknoplat" in res_data['identifier'].lower():
+            response_meeting_create = self.push_activity_to_teknoplat(meeting_data)
 
             response_meeting_create_mappings = {
                 500: (status.HTTP_503_SERVICE_UNAVAILABLE, 'Create meeting request failed'),

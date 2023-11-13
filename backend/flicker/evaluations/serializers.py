@@ -7,7 +7,7 @@ class EvaluationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Evaluation
-        fields = ('url', 'account', 'criteria', 'pitch', 'value', 'remark')
+        fields = ('url', 'account', 'evaluated_criterias', 'pitch', 'remark')
 
     def get_url(self, obj):
         request = self.context.get('request')

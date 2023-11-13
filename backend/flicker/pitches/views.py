@@ -3,12 +3,13 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from .models import Pitch
 from .serializers import PitchSerializer
+from flicker.permissions import IsTeacherUserOrReadOnly
 
 # Create your views here.
 class PitchViewSet(viewsets.ModelViewSet):
     queryset = Pitch.objects.all()
     serializer_class = PitchSerializer
-    permission_classes = (permissions.AllowAny,) # Change this to Teacher/AdminOnlyUserOrReadOnly
+    permission_classes = (permissions.IsAuthenticated, IsTeacherUserOrReadOnly, )
 
     def validate_team(self, team_id):
         authorization_header = self.request.META.get('HTTP_AUTHORIZATION', None)

@@ -17,3 +17,10 @@ class MeetingCriteria(models.Model):
     meeting = models.ForeignKey('meetings.Meeting', on_delete=models.CASCADE)
     criteria = models.ForeignKey(Criteria, on_delete=models.CASCADE)
     weight = models.DecimalField(max_digits=3, decimal_places=2)
+
+class EvaluationCriteria(models.Model):
+    evaluation = models.ForeignKey('evaluations.Evaluation', on_delete=models.CASCADE)
+    meeting_criteria = models.ForeignKey(MeetingCriteria, on_delete=models.CASCADE)
+    value = models.PositiveIntegerField()
+
+    

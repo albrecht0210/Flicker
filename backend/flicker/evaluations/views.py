@@ -7,4 +7,4 @@ from .serializers import EvaluationSerializer
 class EvaluationViewSet(viewsets.ModelViewSet):
     queryset = Evaluation.objects.all()
     serializer_class = EvaluationSerializer
-    permission_classes = (permissions.AllowAny,) # Change this to TeacherOnlyUser
+    permission_classes = (permissions.IsAuthenticated,) # Change this to TeacherOnlyUser

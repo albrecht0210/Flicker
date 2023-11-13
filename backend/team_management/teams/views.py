@@ -27,11 +27,11 @@ class TeamViewSet(viewsets.ModelViewSet):
             try:
                 account = Account.objects.get(pk=account_id)
 
-                member_in_course = Course.objects.filter(id=team.course, members__in=account)
+                member_in_course = Course.objects.filter(id=team.course.id, members__in=[account])
                 if not member_in_course.exists():
                     return Response({'error': 'Account is not a member of the course.'}, status=status.HTTP_400_BAD_REQUEST)
                 
-                existing_team = Team.objects.filter(members__in=account).exclude(pk=team.pk)
+                existing_team = Team.objects.filter(members__in=[account]).exclude(pk=team.pk)
                 if existing_team.exists():
                     return Response({'error': 'Account is a member of other teams.'}, status=status.HTTP_400_BAD_REQUEST)
 

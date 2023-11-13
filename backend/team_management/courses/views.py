@@ -29,7 +29,7 @@ class CourseViewSet(viewsets.ModelViewSet):
                 if account.is_staff and members.filter(is_staff=True).exists():
                     return Response({'error': 'A staff member is already a member of the course.'}, status=status.HTTP_400_BAD_REQUEST)
                 
-                existing_course = Course.objects.filter(name=course.name, members__in=[account]).exclude(pk=course.pk)
+                existing_course = Course.objects.filter(name=course.name, section=course.section, members__in=[account]).exclude(pk=course.pk)
                 if existing_course.exists():
                     return Response({'error': 'Account has already enrolled in a course with the same name.'}, status=status.HTTP_400_BAD_REQUEST)
 

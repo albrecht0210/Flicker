@@ -7,16 +7,18 @@ from pitches.models import Pitch
 from pitches.serializers import PitchSerializer
 from criterias.models import Criteria, MeetingCriteria
 from criterias.serializers import CriteriaSerializer, MeetingCriteriaSerializer
+from flicker.permissions import IsTeacherUserOrReadOnly
 
 # Create your views here.
 class MeetingCreateAPIView(generics.CreateAPIView):
     serializer_class = FillMeetingSerializer
     permission_classes = (permissions.AllowAny,) # Change this to Teacher/AdminOnlyUser
+    permission_classes = (permissions.IsAuthenticated, IsTeacherUserOrReadOnly, )
     
 class MeetingViewSet(viewsets.ModelViewSet):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
-    permission_classes = (permissions.AllowAny,) # Change this to Teacher/AdminOnlyUserOrReadOnly
+    permission_classes = (permissions.IsAuthenticated, IsTeacherUserOrReadOnly, ) # Change this to Teacher/AdminOnlyUserOrReadOnly
 
     def get_queryset(self):
         queryset = Meeting.objects.all()

@@ -8,10 +8,9 @@ class Evaluation(models.Model):
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     # Uncomment after initial migration.
-    criteria = models.ForeignKey('criterias.Criteria', on_delete=models.CASCADE)
     pitch = models.ForeignKey('pitches.Pitch', on_delete=models.CASCADE)
+    evaluated_criterias = models.ManyToManyField('criterias.MeetingCriteria', through='criterias.EvaluationCriteria')
 
-    value = models.PositiveIntegerField()
     remark = models.TextField()
 
     created_at = models.DateTimeField(auto_now_add=True) 
